@@ -78,6 +78,15 @@ class Variant
         return $this->image;
     }
 
+    public function getImageRaw64()
+    {
+        if($this->image==null || get_resource_type($this->image) !='stream'){
+            return null;
+        }
+        rewind($this->image);
+        return base64_encode(stream_get_contents($this->image));
+    }
+    
     public function setImage($image): self
     {
         $this->image = $image;

@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Type;
 use App\Entity\Variant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +49,34 @@ class VariantRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function getListByCategorie($categorie)
+    {
+        if($categorie!=Type::CATEGORIE_CHAUSSANT && $categorie!=Type::CATEGORIE_TEXTILE){
+            throw new Exception("Catégorie non gérée");
+        }
+        return $this->createQueryBuilder('v')
+            ->addSelect('c, p,t,m')
+            ->join('v.couleur', 'c')
+            ->join('v.produit', 'p')
+            ->join('p.type', 't')
+            ->join('p.marque', 'm')
+            ->andWhere('t.categorie = :cat_val')
+            ->addOrderBy('t.nom')
+            ->addOrderBy('p.nom')
+            ->addOrderBy('c.nom')
+            ->setParameter('cat_val', $categorie)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function getListTextile()
+    {
+        return $this->getListByCategorie(Type::CATEGORIE_TEXTILE);
+    }
+    public function getListChaussant()
+    {
+        return $this->getListByCategorie(Type::CATEGORIE_CHAUSSANT);
+    }
 }

@@ -18,3 +18,4 @@ require('bootstrap');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
+import variantCard from './variantCard';

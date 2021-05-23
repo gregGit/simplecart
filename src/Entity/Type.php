@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Type
 {
+    const CATEGORIE_CHAUSSANT='C';
+    const CATEGORIE_TEXTILE='T';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

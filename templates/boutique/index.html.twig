@@ -1,7 +1,34 @@
 {% extends 'base.html.twig' %}
+{% import 'macro.produits.twig' as macroProduits %}
 
 {% block title %}Boutique{% endblock %}
 
 {% block body %}
-    Boutique
+    <div class="container">
+        <div class="row row-cols-auto ">
+            {% if listVariants is defined and listVariants is not empty%}
+                {% for variant in listVariants %}
+                        <div class="col">{{ macroProduits.variantCard(variant) }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalInfo" tabindex="-1" aria-labelledby="modalInfoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalInfoLabel">Ajouter au panier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <a href="/cart" class="btn btn-primary">voir le panier</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continuer les achats</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

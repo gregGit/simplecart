@@ -35,7 +35,7 @@ class Produit
     private $nom;
 
     /**
-     * @ORM\ManyToOne(targetEntity=type::class, inversedBy="produits")
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="produits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;

@@ -1,11 +1,20 @@
 <?php
 
 
-namespace App\Services\Cart;
+namespace App\Service\Cart;
 
 use App\Entity\Variant;
 
-
+/**
+ * Un CarItem est un élément du panier. Il correspond donc à
+ * - un objet de type variant
+ * - une taille
+ * - une quantité
+ *
+ * La clé d'un item est composé de l'id du variant et de la taille
+ * Class CartItem
+ * @package App\Service\Cart
+ */
 class CartItem
 {
     private $addTime;
@@ -97,6 +106,11 @@ class CartItem
         return $this;
     }
 
+    /**
+     * Retourne le montant de l'item (qte*prix unitaire)
+     *
+     * @return float|null
+     */
     public function getAmount()
     {
         if(is_numeric($this->getQty()) && is_object($this->getVariant())){

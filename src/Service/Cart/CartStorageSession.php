@@ -1,12 +1,17 @@
 <?php
 
 
-namespace App\Services\Cart;
+namespace App\Service\Cart;
 
 
-use App\Services\DateTimeApp;
+use App\Service\DateTimeApp;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ * Class CartStorageSession
+ * Stockage des informations du panier en session
+ * @package App\Service\Cart
+ */
 class CartStorageSession implements CartStorageInterface
 {
     const _KEY_CREATETIME='created_at';
@@ -19,12 +24,12 @@ class CartStorageSession implements CartStorageInterface
     }
     public function getCreationTime():?DateTimeApp
     {
-        return $this->session->get(self::_KEY_CREATETIME, null);
+        return $this->session->get(self::_KEY_CREATETIME);
     }
 
     public function getCartItems():?CartContent
     {
-        return $this->session->get(self::_KEY_CARTITEMS, null);
+        return $this->session->get(self::_KEY_CARTITEMS);
     }
 
     public function setCreationTime(DateTimeApp $value)

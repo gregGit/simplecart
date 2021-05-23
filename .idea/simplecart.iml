@@ -82,7 +82,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="royer" />
-    <orderEntry type="module" module-name="e-rabelais" />
   </component>
 </module>

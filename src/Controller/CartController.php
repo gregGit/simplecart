@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\VariantRepository;
-use App\Services\Cart\CartItem;
-use App\Services\Cart\CartManager;
+use App\Service\Cart\CartItem;
+use App\Service\Cart\CartManager;
+use App\Service\DateTimeApp;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class CartController extends AbstractController
 {
     #[Route('/cart/content', name: 'cart-content')]
-    public function index(CartManager $cartManager): Response
+    public function index(CartManager $cartManager, DateTimeApp $siteUpdateManager): Response
     {
+
         return $this->render(
             'cart/index.html.twig', [
             'controller_name' => 'CartController',

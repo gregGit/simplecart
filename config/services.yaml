@@ -29,3 +29,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\DateTimeApp:
+        arguments:
+            $joursFeries:
+                - '01-01'
+                - '01-05'
+                - '08-05'
+                - '14-07'
+                - '15-08'
+                - '01-11'
+                - '25-12'
+
+    App\Service\Cart\CartManager:
+        arguments:
+            $cartStorage: '@App\Service\Cart\CartStorageSession'
+

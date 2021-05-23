@@ -3,8 +3,8 @@
 
 namespace App\Services\Cart;
 
+use App\Entity\Variant;
 
-use App\Entity\Variants;
 
 class CartItem
 {
@@ -14,7 +14,7 @@ class CartItem
     private $qty;
 
 
-    public function __construct(Variants $variant, $size, $qty)
+    public function __construct(Variant $variant, $size, $qty)
     {
         $this->setVariant($variant)
             ->setSize($size)

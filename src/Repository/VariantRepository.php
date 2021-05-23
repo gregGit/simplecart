@@ -79,4 +79,19 @@ class VariantRepository extends ServiceEntityRepository
     {
         return $this->getListByCategorie(Type::CATEGORIE_CHAUSSANT);
     }
+
+
+    public function findOneById($variantId): ?Variant
+    {
+        return $this->createQueryBuilder('v')
+            ->addSelect('c,p,m')
+            ->join('v.couleur', 'c')
+            ->join('v.produit', 'p')
+            ->join('p.marque', 'm')
+            ->andWhere('v.id = :id')
+            ->setParameter('id', $variantId)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

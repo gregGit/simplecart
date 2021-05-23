@@ -86,7 +86,7 @@ class Variant
         rewind($this->image);
         return base64_encode(stream_get_contents($this->image));
     }
-    
+
     public function setImage($image): self
     {
         $this->image = $image;
@@ -116,5 +116,14 @@ class Variant
         $this->couleur = $couleur;
 
         return $this;
+    }
+
+    public function getStock($scTaille){
+        foreach($this->getTailles() as $taille=>$stock){
+            if($taille==$scTaille){
+                return $stock;
+            }
+        }
+        return false;
     }
 }

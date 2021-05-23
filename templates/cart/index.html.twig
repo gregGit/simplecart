@@ -1,20 +1,38 @@
 {% extends 'base.html.twig' %}
+{% import 'macro.cart.twig' as macroCart %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block stylesheets %}
+ {{ parent() }}
+ {{ encore_entry_link_tags('cart-content') }}
+ {% endblock %}
+
+{% block title %}Contenu du panier{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Contenu du panier</h1>
+    <div class="container cart-content">
+        {% if(content|length<1)  %}
+            <p class="clear">Votre panier est vide</p>
+        {% else %}
+            <div class="row cart-content-head">
+                <div class="col-6">Référence/Désignation</div>
+                <div class="col-2">Taille</div>
+                <div class="col-2">Quantité</div>
+                <div class="col-2">Total</div>
+            </div>
+            {{ macroCart.cartContent(content) }}
+            <div class="row cart-content-foot">
+                <div class="col-10">Votre commande sera expédiée le {{ dateShip|date('d/m/Y') }}</div>
+                <div class="col-2">{{ cartTotal|format_currency('EUR') }}</div>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        {%  endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/mnt/c/www/simplecart/src/Controller/CartController.php'|file_link(0) }}">src/Controller/CartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/mnt/c/www/simplecart/templates/cart/index.html.twig'|file_link(0) }}">templates/cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+    </div>
+    <div class="btn-group">
+        <a href="{{path('cart-reset') }}" class="btn btn-danger">Vider le panier</a>
+        <a href="{{ path('boutique') }}" class="btn btn-primary">Retour à la boutique</a>
+    </div>
+
 {% endblock %}
+

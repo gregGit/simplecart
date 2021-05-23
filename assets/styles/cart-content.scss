@@ -1,0 +1,11 @@
+.cart-content{
+  .cart-content-head,.cart-content-foot{
+    font-size:1.2rem;
+    font-weight:bold;
+  }
+  .cart-content-body:nth-child(odd){
+    background-color: #F8F9FA;
+  }
+  margin:20px auto;
+}
+

@@ -4,8 +4,6 @@
 namespace App\Services\Cart;
 
 
-use App\Entity\Variants;
-
 class CartContent implements \Iterator
 {
     protected $pos=0;

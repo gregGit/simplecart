@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CartController extends AbstractController
 {
     #[Route('/cart/content', name: 'cart-content')]
-    public function index(CartManager $cartManager, DateTimeApp $siteUpdateManager): Response
+    public function index(CartManager $cartManager): Response
     {
 
         return $this->render(

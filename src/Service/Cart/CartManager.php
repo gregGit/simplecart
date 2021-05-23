@@ -65,16 +65,6 @@ class CartManager
         return $this;
     }
 
-    /**
-     * RAZ panier
-     * Le panier est supprimé sur le stockage puis réinitialisé
-     * @return $this
-     */
-    public function reset(){
-        $this->delete();
-        $this->initialize();
-        return $this;
-    }
 
     /**
      * Suppression

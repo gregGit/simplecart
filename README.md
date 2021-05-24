@@ -1,12 +1,12 @@
-#SimpleCart
+# SimpleCart
 Application panier simplifié
-##Contexte technique de réalisation/Test
+## Contexte technique de réalisation/Test
 - Apache/2.4.41
 - Php 8.0.5 FPM/FastCGI
 - Base de données Postgresql v12.6
 - Réalisé avec Symfony 5.2.9
 
-###Modèle relationnel
+### Modèle relationnel
 Le modèle relationnel correspondant à la base est le suivant 
 
 ![alt text](schemaR.png)
@@ -24,7 +24,7 @@ Trois fichiers sont présents pour restaurer la base:
 - simplecart.db-full.psql.dump : pg_dump complet
 
 Par simplicité, les fichiers sont présents à la racine du projet.
-##Principe
+## Principe
 Le site comporte un menu avec 3 éléments :
 - Chaussant : Produits de catégorie *Chaussant*. Il s'agit de la page par défaut
 - Textile : Produits de catégorie *Textile*
@@ -36,7 +36,7 @@ La vue du panier affiche la liste de tous les variants ajoutés avec la taille e
 Il est possible de modifier une quantité(requête ajax sur l'évenement blur), de supprimer un article ou tout le panier; le total est alors recalculé.
 
 
-##Fichier host
+## Fichier host
 Config du virtualhost utilisée
 ```
 <VirtualHost *:80>

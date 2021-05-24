@@ -10,19 +10,18 @@ class DateTimeApp extends \DateTime
 
     private $joursFeries; //Contient la liste des jours fériés sous la forme jj-mm
 
-    public function __construct($datetime = 'now', \DateTimeZone $timezone = null, array $joursFeries)
+    public function __construct($datetime = 'now', \DateTimeZone $timezone = null)
     {
         parent::__construct($datetime, $timezone);
-        $this->joursFeries=$joursFeries;
-        $this->setJoursFeries();
     }
 
 
     /**
-     * Détermine les jours fériés autres que ceux passés au constructeurs (paques, ascencion pentecote)
+     * Détermine les jours fériés
+     * Ajoute les jours passés en arguments + ceux à date variable(paques, ascencion pentecote)
      * @throws \Exception
      */
-    protected function setJoursFeries(){
+    public function setJoursFeries(array $fixedDays=[]){
         $base = new parent(sprintf("%s-03-21", $this->format('Y')), $this->getTimezone());
         $days = easter_days($this->format('Y'));
         $base->add(new \DateInterval("P{$days}D"));//Dim de paques

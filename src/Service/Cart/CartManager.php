@@ -5,6 +5,7 @@ namespace App\Service\Cart;
 
 
 use App\Service\DateTimeApp;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 /**
  * Gestionnaire du pannier.
@@ -24,16 +25,18 @@ class CartManager
     private $cartStorage;
     private $error;
 
+    private $appParams;
     /**
      *
      * Un objet de type CartStorageInterface doit être injecté pour que la classe fonctionne
      * CartManager constructor.
      * @param CartStorageInterface $cartStorage
      */
-    public function __construct(CartStorageInterface $cartStorage, DateTimeApp $cartCreateTime)
+    public function __construct(CartStorageInterface $cartStorage, ContainerBagInterface $params)
     {
         $this->cartStorage=$cartStorage;
-        $this->initialize($cartCreateTime);
+        $this->appParams=$params;
+        $this->initialize();
     }
 
     /**
@@ -42,11 +45,12 @@ class CartManager
      * Si le stockage est vide initialise cartCreateTime et cartItems
      * @return $this
      */
-    protected function  initialize($cartCreateTime){
+    protected function  initialize(){
         $this->load();
         $this->error=self::_ERR_NONE;
         if(empty($this->cartCreateTime)){
-            $this->cartCreateTime=$cartCreateTime;
+            $this->cartCreateTime=new DateTimeApp();
+            $this->cartCreateTime->setJoursFeries($this->appParams->get('app.joursFeries'));
         }
         if(empty($this->cartItems)){
             $this->cartItems=new CartContent();

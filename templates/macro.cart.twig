@@ -3,7 +3,7 @@
         <div class="row cart-content-body">
             <div class="col-6">
                 <span class="produit_ref">{{ item.getVariant().getProduit().getReference() }}</span> :
-                <span class="produit_des">{{ item.getVariant().getProduit().getMarque().getNom() }} {{ item.getVariant().getProduit().getNom() }}</span>
+                <span class="produit_des">{{ item.getVariant().getProduit().getMarque().getNom() }} {{ item.getVariant().getProduit().getNom() }} - {{ item.getVariant().getCouleur().getNom() }}</span>
             </div>
             <div class="col-2">
                 <span class="produit_taille">{{ item.getSize() }}</span>

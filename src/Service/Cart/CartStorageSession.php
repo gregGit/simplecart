@@ -46,8 +46,7 @@ class CartStorageSession implements CartStorageInterface
 
     public function destroy()
     {
-        $this->session->remove(self::_KEY_CARTITEMS);
-        $this->session->remove(self::_KEY_CREATETIME);
+        $this->session->clear();
         return $this;
     }
 

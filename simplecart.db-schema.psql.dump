@@ -1,0 +1,287 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: couleur_id_seq; Type: SEQUENCE; Schema: public; Owner: royer
+--
+
+CREATE SEQUENCE public.couleur_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.couleur_id_seq OWNER TO royer;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: couleur; Type: TABLE; Schema: public; Owner: royer
+--
+
+CREATE TABLE public.couleur (
+    id integer DEFAULT nextval('public.couleur_id_seq'::regclass) NOT NULL,
+    code integer NOT NULL,
+    nom character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.couleur OWNER TO royer;
+
+--
+-- Name: doctrine_migration_versions; Type: TABLE; Schema: public; Owner: royer
+--
+
+CREATE TABLE public.doctrine_migration_versions (
+    version character varying(191) NOT NULL,
+    executed_at timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    execution_time integer
+);
+
+
+ALTER TABLE public.doctrine_migration_versions OWNER TO royer;
+
+--
+-- Name: marque_id_seq; Type: SEQUENCE; Schema: public; Owner: royer
+--
+
+CREATE SEQUENCE public.marque_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.marque_id_seq OWNER TO royer;
+
+--
+-- Name: marque; Type: TABLE; Schema: public; Owner: royer
+--
+
+CREATE TABLE public.marque (
+    id integer DEFAULT nextval('public.marque_id_seq'::regclass) NOT NULL,
+    nom character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.marque OWNER TO royer;
+
+--
+-- Name: produit; Type: TABLE; Schema: public; Owner: royer
+--
+
+CREATE TABLE public.produit (
+    id integer DEFAULT nextval('public.marque_id_seq'::regclass) NOT NULL,
+    type_id integer NOT NULL,
+    marque_id integer NOT NULL,
+    reference character varying(9) NOT NULL,
+    genre character varying(1) NOT NULL,
+    nom character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.produit OWNER TO royer;
+
+--
+-- Name: produit_id_seq; Type: SEQUENCE; Schema: public; Owner: royer
+--
+
+CREATE SEQUENCE public.produit_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.produit_id_seq OWNER TO royer;
+
+--
+-- Name: type_id_seq; Type: SEQUENCE; Schema: public; Owner: royer
+--
+
+CREATE SEQUENCE public.type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.type_id_seq OWNER TO royer;
+
+--
+-- Name: type; Type: TABLE; Schema: public; Owner: royer
+--
+
+CREATE TABLE public.type (
+    id integer DEFAULT nextval('public.type_id_seq'::regclass) NOT NULL,
+    nom character varying(50) NOT NULL,
+    categorie character varying(1) NOT NULL
+);
+
+
+ALTER TABLE public.type OWNER TO royer;
+
+--
+-- Name: variant_id_seq; Type: SEQUENCE; Schema: public; Owner: royer
+--
+
+CREATE SEQUENCE public.variant_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.variant_id_seq OWNER TO royer;
+
+--
+-- Name: variant; Type: TABLE; Schema: public; Owner: royer
+--
+
+CREATE TABLE public.variant (
+    id integer DEFAULT nextval('public.variant_id_seq'::regclass) NOT NULL,
+    produit_id integer NOT NULL,
+    couleur_id integer NOT NULL,
+    prix double precision NOT NULL,
+    tailles json NOT NULL,
+    image bytea
+);
+
+
+ALTER TABLE public.variant OWNER TO royer;
+
+--
+-- Name: couleur couleur_pkey; Type: CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.couleur
+    ADD CONSTRAINT couleur_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: doctrine_migration_versions doctrine_migration_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.doctrine_migration_versions
+    ADD CONSTRAINT doctrine_migration_versions_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: marque marque_pkey; Type: CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.marque
+    ADD CONSTRAINT marque_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: produit produit_pkey; Type: CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.produit
+    ADD CONSTRAINT produit_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: type type_pkey; Type: CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.type
+    ADD CONSTRAINT type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: variant variant_pkey; Type: CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.variant
+    ADD CONSTRAINT variant_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: idx_29a5ec274827b9b2; Type: INDEX; Schema: public; Owner: royer
+--
+
+CREATE INDEX idx_29a5ec274827b9b2 ON public.produit USING btree (marque_id);
+
+
+--
+-- Name: idx_29a5ec27c54c8c93; Type: INDEX; Schema: public; Owner: royer
+--
+
+CREATE INDEX idx_29a5ec27c54c8c93 ON public.produit USING btree (type_id);
+
+
+--
+-- Name: idx_f143bfadc31ba576; Type: INDEX; Schema: public; Owner: royer
+--
+
+CREATE INDEX idx_f143bfadc31ba576 ON public.variant USING btree (couleur_id);
+
+
+--
+-- Name: idx_f143bfadf347efb; Type: INDEX; Schema: public; Owner: royer
+--
+
+CREATE INDEX idx_f143bfadf347efb ON public.variant USING btree (produit_id);
+
+
+--
+-- Name: produit fk_29a5ec274827b9b2; Type: FK CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.produit
+    ADD CONSTRAINT fk_29a5ec274827b9b2 FOREIGN KEY (marque_id) REFERENCES public.marque(id);
+
+
+--
+-- Name: produit fk_29a5ec27c54c8c93; Type: FK CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.produit
+    ADD CONSTRAINT fk_29a5ec27c54c8c93 FOREIGN KEY (type_id) REFERENCES public.type(id);
+
+
+--
+-- Name: variant fk_f143bfadc31ba576; Type: FK CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.variant
+    ADD CONSTRAINT fk_f143bfadc31ba576 FOREIGN KEY (couleur_id) REFERENCES public.couleur(id);
+
+
+--
+-- Name: variant fk_f143bfadf347efb; Type: FK CONSTRAINT; Schema: public; Owner: royer
+--
+
+ALTER TABLE ONLY public.variant
+    ADD CONSTRAINT fk_f143bfadf347efb FOREIGN KEY (produit_id) REFERENCES public.produit(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

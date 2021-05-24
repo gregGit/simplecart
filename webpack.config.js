@@ -21,7 +21,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    .addEntry('cart-content', './assets/styles/cart-content.scss')
+    .addEntry('cart-content-css', './assets/styles/cart-content.scss')
+    .addEntry('cart-content-js', './assets/cart-content.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

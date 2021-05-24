@@ -15,7 +15,8 @@ const $ = require('jquery');
 global.$ = global.jQuery = $;
 require('bootstrap');
 
+import "./variantCard.js";
+
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
-import variantCard from './variantCard';

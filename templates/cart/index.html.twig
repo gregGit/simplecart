@@ -3,9 +3,13 @@
 
 {% block stylesheets %}
  {{ parent() }}
- {{ encore_entry_link_tags('cart-content') }}
+ {{ encore_entry_link_tags('cart-content-css') }}
  {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('cart-content-js') }}
+{% endblock %}
 {% block title %}Contenu du panier{% endblock %}
 
 {% block body %}
@@ -23,7 +27,7 @@
             {{ macroCart.cartContent(content) }}
             <div class="row cart-content-foot">
                 <div class="col-10">Votre commande sera expédiée le {{ dateShip|date('d/m/Y') }}</div>
-                <div class="col-2">{{ cartTotal|format_currency('EUR') }}</div>
+                <div class="col-2" id="cardTotal">{{ cartTotal|format_currency('EUR') }}</div>
             </div>
 
         {%  endif %}

@@ -19,6 +19,7 @@ class CartManager
 {
     const _ERR_NONE=0;
     const _ERR_STOCK=1;
+    const _ERR_NOTINCART=1;
 
     private $cartCreateTime;
     private $cartItems;
@@ -99,7 +100,51 @@ class CartManager
             return false;
         }
     }
+    public function setQtyItem(CartItem $cartItem){
+        if(!$this->isInCart($cartItem)){
+            $this->error=self::_ERR_NOTINCART;
+            return false;
+        }
+        $stock=$cartItem->getVariant()->getStock($cartItem->getSize());
+        if($stock<$cartItem->getQty()){
+            $this->error=self::_ERR_STOCK;
+            return false;
+        }
+        $this->cartItems->set($cartItem);
+        return true;
+    }
 
+    public function removeItem(CartItem $cartItem){
+        if(!$this->isInCart($cartItem)){
+            $this->error=self::_ERR_NOTINCART;
+            return false;
+        }
+        $this->cartItems->remove($cartItem);
+        return true;
+    }
+    /**
+     * Recherche un item et le retourne
+     * @param CartItem $searchItem
+     * @return mixed|null
+     */
+    public function getItem(CartItem $searchItem){
+        foreach ($this->cartItems as $key=>$item){
+            if($searchItem->getKey()==$item->getKey()){
+                return $item;
+            }
+        }
+        return null;
+    }
+
+    protected function isInCart(CartItem $searchItem)
+    {
+        foreach ($this->cartItems as $key=>$item){
+            if($searchItem->getKey()==$item->getKey()){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Vérification stock
      * Vérifie que le stock pour l'item est suffisant, en tenant compte :

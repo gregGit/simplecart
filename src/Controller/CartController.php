@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Repository\VariantRepository;
 use App\Service\Cart\CartItem;
 use App\Service\Cart\CartManager;
-use App\Service\DateTimeApp;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Intl\Currencies;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Extra\Intl\IntlExtension;
 
 class CartController extends AbstractController
 {
@@ -59,6 +60,64 @@ class CartController extends AbstractController
     {
         $cartManager->delete();
         return $this->redirectToRoute('boutique');
+    }
+    #[Route('/cart/remove', name: 'cart-remove')]
+    public function remove(Request $request,VariantRepository $variantRepository, CartManager $cartManager): Response
+    {
+        $variantId = $request->request->get('variant');
+        $oVariant=$variantRepository->findOneById($variantId);
+        $addOk=false;
+        $info='';
+        if($oVariant) {
+            $qte = $request->request->get('qte');
+            $size = $request->request->get('size');
+            $item = new CartItem($oVariant, $size, $qte);
+            $cartManager->removeItem($item);
+            if (!$cartManager->hasError()) {
+                $addOk = true;
+                $cartManager->store();
+            } else {
+                $info = $cartManager->getError();
+            }
+        }
+        $twExt=new IntlExtension();
+        return new JsonResponse([
+                'addOk'=>$addOk,
+                'info'=>$info,
+                'cartQte'=>$cartManager->getTotalQte(),
+                'cartAmount'=>$twExt->formatCurrency($cartManager->getCartTotal(), 'EUR')
+            ]
+        );
+    }
+    #[Route('/cart/setqty', name: 'cart-setqty')]
+    public function setqty(Request $request,VariantRepository $variantRepository, CartManager $cartManager): Response
+    {
+        $variantId = $request->request->get('variant');
+        $oVariant=$variantRepository->findOneById($variantId);
+        $addOk=false;
+        $info='';
+        if($oVariant){
+            $qte=$request->request->get('qte');
+            $size=$request->request->get('size');
+            $item=New CartItem($oVariant, $size, $qte);
+            $cartManager->setQtyItem($item);
+            if(!$cartManager->hasError()){
+                $addOk=true;
+                $cartManager->store();
+            }else {
+                $info=$cartManager->getError();
+            }
+        }
+
+        $twExt=new IntlExtension();
+        return new JsonResponse([
+                'addOk'=>$addOk,
+                'info'=>$info,
+                'cartQte'=>$cartManager->getTotalQte(),
+                'cartAmount'=>$twExt->formatCurrency($cartManager->getCartTotal(), 'EUR'),
+                'itemAmount'=>$twExt->formatCurrency($cartManager->getItem(New CartItem($oVariant, $size, $qte))->getAmount(),'EUR')
+            ]
+        );
     }
 
     protected function isXmlHttpRequest(Request $request) {

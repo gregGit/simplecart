@@ -3,6 +3,8 @@
 
 namespace App\Service\Cart;
 
+use Iterator;
+
 /**
  * CartContent est une liste de CarItem, donc au contenu du panier.
  * La classe implémente iterator pour pouvoir être itérée
@@ -10,7 +12,7 @@ namespace App\Service\Cart;
  * Class CartContent
  * @package App\Service\Cart
  */
-class CartContent implements \Iterator
+class CartContent implements Iterator
 {
     protected $pos=0;
     protected $items=[];

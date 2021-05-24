@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Intl\Currencies;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Extra\Intl\IntlExtension;
 
@@ -32,6 +31,9 @@ class CartController extends AbstractController
     #[Route('/cart/add', name: 'cart-add')]
     public function add(Request $request,VariantRepository $variantRepository, CartManager $cartManager): Response
     {
+        if(!$request->isXmlHttpRequest()){
+            return $this->redirectToRoute('boutique');
+        }
         $variantId=$request->request->get('variant');
         $oVariant=$variantRepository->findOneById($variantId);
         $addOk=false;
@@ -64,6 +66,9 @@ class CartController extends AbstractController
     #[Route('/cart/remove', name: 'cart-remove')]
     public function remove(Request $request,VariantRepository $variantRepository, CartManager $cartManager): Response
     {
+        if(!$request->isXmlHttpRequest()){
+            return $this->redirectToRoute('boutique');
+        }
         $variantId = $request->request->get('variant');
         $oVariant=$variantRepository->findOneById($variantId);
         $addOk=false;
@@ -92,10 +97,14 @@ class CartController extends AbstractController
     #[Route('/cart/setqty', name: 'cart-setqty')]
     public function setqty(Request $request,VariantRepository $variantRepository, CartManager $cartManager): Response
     {
+        if(!$request->isXmlHttpRequest()){
+            return $this->redirectToRoute('boutique');
+        }
         $variantId = $request->request->get('variant');
         $oVariant=$variantRepository->findOneById($variantId);
         $addOk=false;
         $info='';
+
         if($oVariant){
             $qte=$request->request->get('qte');
             $size=$request->request->get('size');
@@ -115,13 +124,10 @@ class CartController extends AbstractController
                 'info'=>$info,
                 'cartQte'=>$cartManager->getTotalQte(),
                 'cartAmount'=>$twExt->formatCurrency($cartManager->getCartTotal(), 'EUR'),
-                'itemAmount'=>$twExt->formatCurrency($cartManager->getItem(New CartItem($oVariant, $size, $qte))->getAmount(),'EUR')
+                'itemAmount'=>$addOk?$twExt->formatCurrency($cartManager->getItem(New CartItem($oVariant, $size, $qte))->getAmount(),'EUR'):null
             ]
         );
     }
 
-    protected function isXmlHttpRequest(Request $request) {
-        return ($request->isXmlHttpRequest()) ||
-            ($this->container->get('kernel')->getEnvironment() == "dev" );
-    }
+
 }

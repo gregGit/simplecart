@@ -12,7 +12,7 @@ Le modèle relationnel correspondant à la base est le suivant
 ![alt text](schemaR.png)
 
 Remarques :
-- La catégorié (C ou T) a été ajouté comme attribut du type dans la mesure où il ne semble pas exister d'autres catégories. 
+- La catégorie (C ou T) a été ajoutée comme attribut du type dans la mesure où il ne semble pas exister d'autres catégories. 
 - Le champ variant.tailles est un tableau associatif json (taille:stock), et donne à la fois les tailles existantes et les stocks.
 - Aucune vérification n'a été mise en place sur la base ni pour les valeurs (code pour les catégories, les genres...), ni pour les contraintes (unicité produit_id/couleur_id dans variant, ...)
 
@@ -31,9 +31,9 @@ Le site comporte un menu avec 3 éléments :
 - Panier : Vue du panier. Dans le menu le nb d'articles dans le panier est affiché
 Chaque article correspond à un *variant* (un produit dans une couleur).
 
-Pour chaque article lorsque l'on choisit une taille le stock s'affiche. Le bouton *ajouter* ajoute l'article par un appel ajax. L'ajout n'est possible que si le stock le permet (quantité à ajouter et quantité déjà en stock).
+Pour chaque article lorsque l'on choisit une taille le stock s'affiche. Le bouton *ajouter* ajoute l'article par un appel ajax. L'ajout n'est possible que si le stock le permet (quantité à ajouter et quantité déjà dans le panier).
 La vue du panier affiche la liste de tous les variants ajoutés avec la taille et la qte choisie.
-Il est possible de modifier une quantité(requête ajax sur l'évenement blur), de supprimer un article ou tout le panier; le total est alors recalculé.
+Il est possible de modifier une quantité(requête ajax sur l'évènement blur), de supprimer un article ou tout le panier; le total est alors recalculé.
 
 Le panier est stoqué en session, mais le projet a été architecturé de telle sorte que la partie stockage du panier soit facilement remplaçable (stockage fichier, base, ....)
 

@@ -35,7 +35,7 @@ Pour chaque article lorsque l'on choisit une taille le stock s'affiche. Le bouto
 La vue du panier affiche la liste de tous les variants ajoutés avec la taille et la qte choisie.
 Il est possible de modifier une quantité(requête ajax sur l'évènement blur), de supprimer un article ou tout le panier; le total est alors recalculé.
 
-Le panier est stoqué en session, mais le projet a été architecturé de telle sorte que la partie stockage du panier soit facilement remplaçable (stockage fichier, base, ....)
+Le panier est stocké en session, mais le projet a été architecturé de telle sorte que la partie stockage du panier soit facilement remplaçable (stockage fichier, base, ....)
 
 ## Apache vhost
 Config du virtualhost utilisée

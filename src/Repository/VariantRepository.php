@@ -21,36 +21,16 @@ class VariantRepository extends ServiceEntityRepository
         parent::__construct($registry, Variant::class);
     }
 
-    // /**
-    //  * @return Variant[] Returns an array of Variant objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Variant
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
-
+    /**
+     * Retrouve toutes les informations des variants d'une catégorie passée en argument.
+     * La catégorie doit être connue sinon une exception est levée
+     *
+     * la requête charge les informations sur le variant, la couleur, le produit, le type et la marque.
+     *
+     * @param $categorie
+     * @return array|null|
+     * @throws Exception
+     */
     public function getListByCategorie($categorie)
     {
         if($categorie!=Type::CATEGORIE_CHAUSSANT && $categorie!=Type::CATEGORIE_TEXTILE){
@@ -71,16 +51,33 @@ class VariantRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * Alias getListByCategorie($categorie) pour $categorie=T
+     * @return array|null
+     * @throws Exception
+     */
     public function getListTextile()
     {
         return $this->getListByCategorie(Type::CATEGORIE_TEXTILE);
     }
+
+    /**
+     * Alias getListByCategorie($categorie) pour $categorie=C
+     * @return array|null
+     * @throws Exception
+     */
     public function getListChaussant()
     {
         return $this->getListByCategorie(Type::CATEGORIE_CHAUSSANT);
     }
 
-
+    /**
+     * Retrouve 1 variant par son id
+     * Les entités couleur, produit et marque sont également chargées
+     * @param $variantId
+     * @return Variant|null
+     */
     public function findOneById($variantId): ?Variant
     {
         return $this->createQueryBuilder('v')

@@ -6,9 +6,9 @@
 {% block body %}
     <div class="container">
         <div class="row row-cols-auto ">
-            {% if listVariants is defined and listVariants is not empty%}
+            {% if listVariants is defined and listVariants is not empty %}
                 {% for variant in listVariants %}
-                        <div class="col">{{ macroProduits.variantCard(variant) }}</div>
+                    <div class="col">{{ macroProduits.variantCard(variant) }}</div>
                 {% endfor %}
             {% endif %}
         </div>
@@ -26,7 +26,8 @@
                 </div>
                 <div class="modal-footer">
                     <a href="{{ path('cart-content') }}" class="btn btn-primary">voir le panier</a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continuer les achats</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continuer les achats
+                    </button>
                 </div>
             </div>
         </div>

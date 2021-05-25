@@ -1,12 +1,15 @@
-.variant-card{
-  margin:20px;
+//la classe variant-card est utilisée pour représenter un variant dans la boutique
+.variant-card {
+  margin: 20px;
+
   img {
     width: auto;
     height: 100px;
-    margin:5px auto;
+    margin: 5px auto;
   }
-  .stock-info{
-    font-size:0.8rem;
+
+  .stock-info {
+    font-size: 0.8rem;
     font-style: italic;
   }
 }

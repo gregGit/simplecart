@@ -1,25 +1,28 @@
-{#Affichage d'un variant dans un élement Card. variant est une entité variant#}
+{# Affichage d'un variant dans un élement Card. variant est une entité variant #}
 {% macro variantCard(variant) %}
     <div class="card variant-card" style="width: 18rem;">
-        {%  if(variant.getImage() is not empty) %}
+        {% if(variant.getImage() is not empty) %}
             <img src="data:image/jpeg;base64,{{ variant.getImageRaw64() }}" alt="">
-        {%  else %}
+        {% else %}
             <img src="{{ asset('/img/nophoto.png') }}" alt="">
-        {%  endif %}
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{ variant.produit.marque.nom }} - {{ variant.produit.nom }}</h5>
             <h5>  {{ variant.couleur.nom }} - {{ variant.prix|format_currency('EUR') }}</h5>
             <div class="input-group">
                 <select class="form-select selectVariantTaille" aria-label="Sélection de la taille">
                     <option selected>Choisir une taille</option>
-                    {%  for taille, stock in variant.tailles %}
+                    {% for taille, stock in variant.tailles %}
                         <option value="{{ taille }}" data-stock="{{ stock }}" {{ (stock==0) ? 'disabled' : '' }}>
                             {{ taille }}{{ (stock==0) ? ' - rupture' : '' }}
                         </option>
-                    {%  endfor %}
+                    {% endfor %}
                 </select>
-                <input type="number" name="qte" class="form-control cartqte" placeholder="1" aria-label="Quantité" aria-describedby="button-addon2" value="1" min="1" max="10">
-                <button class="btn btn-outline-primary add2cart" type="button" data-vid="{{ variant.id }}" disabled>Ajouter</button>
+                <input type="number" name="qte" class="form-control cartqte" placeholder="1" aria-label="Quantité"
+                       aria-describedby="button-addon2" value="1" min="1" max="10">
+                <button class="btn btn-outline-primary add2cart" type="button" data-vid="{{ variant.id }}" disabled>
+                    Ajouter
+                </button>
             </div>
             <div class="stock-info">Sélectionner une taille pour voir le stock</div>
         </div>

@@ -23,7 +23,7 @@ class CartItem
     private $qty;
 
 
-    public function __construct(Variant $variant, $size, $qty)
+    public function __construct(Variant $variant, $size, $qty=0)
     {
         $this->setVariant($variant)
             ->setSize($size)
@@ -31,25 +31,9 @@ class CartItem
         $this->setAddTime(date('YmdHis'));
     }
 
-    public function getKey(){
+    public function getKey()
+    {
         return sprintf("%s_%s", $this->getVariant()->getId(), $this->getSize());
-    }
-    /**
-     * @return mixed
-     */
-    public function getAddTime()
-    {
-        return $this->addTime;
-    }
-
-    /**
-     * @param mixed $addTime
-     * @return CartItem
-     */
-    public function setAddTime($addTime)
-    {
-        $this->addTime = $addTime;
-        return $this;
     }
 
     /**
@@ -91,6 +75,37 @@ class CartItem
     /**
      * @return mixed
      */
+    public function getAddTime()
+    {
+        return $this->addTime;
+    }
+
+    /**
+     * @param mixed $addTime
+     * @return CartItem
+     */
+    public function setAddTime($addTime)
+    {
+        $this->addTime = $addTime;
+        return $this;
+    }
+
+    /**
+     * Retourne le montant de l'item (qte*prix unitaire)
+     *
+     * @return float|null
+     */
+    public function getAmount()
+    {
+        if (is_numeric($this->getQty()) && is_object($this->getVariant())) {
+            return (int)$this->getQty() * $this->getVariant()->getPrix();
+        }
+        return null;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getQty()
     {
         return $this->qty;
@@ -104,18 +119,5 @@ class CartItem
     {
         $this->qty = $qty;
         return $this;
-    }
-
-    /**
-     * Retourne le montant de l'item (qte*prix unitaire)
-     *
-     * @return float|null
-     */
-    public function getAmount()
-    {
-        if(is_numeric($this->getQty()) && is_object($this->getVariant())){
-            return (int)$this->getQty()*$this->getVariant()->getPrix();
-        }
-        return null;
     }
 }

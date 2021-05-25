@@ -14,20 +14,22 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class CartStorageSession implements CartStorageInterface
 {
-    const _KEY_CREATETIME='created_at';
-    const _KEY_CARTITEMS='cart_items';
+    const _KEY_CREATETIME = 'created_at';
+    const _KEY_CARTITEMS = 'cart_items';
 
     private $session;
 
-    public function __construct(SessionInterface $session){
-        $this->session=$session;
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
     }
-    public function getCreationTime():?DateTimeApp
+
+    public function getCreationTime(): ?DateTimeApp
     {
         return $this->session->get(self::_KEY_CREATETIME);
     }
 
-    public function getCartItems():?CartContent
+    public function getCartItems(): ?CartContent
     {
         return $this->session->get(self::_KEY_CARTITEMS);
     }

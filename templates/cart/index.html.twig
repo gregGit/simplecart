@@ -2,9 +2,9 @@
 {% import 'macro.cart.twig' as macroCart %}
 
 {% block stylesheets %}
- {{ parent() }}
- {{ encore_entry_link_tags('cart-content-css') }}
- {% endblock %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('cart-content-css') }}
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -15,7 +15,7 @@
 {% block body %}
     <h1>Contenu du panier</h1>
     <div class="container cart-content">
-        {% if(content|length<1)  %}
+        {% if(content|length<1) %}
             <p class="clear">Votre panier est vide</p>
         {% else %}
             <div class="row cart-content-head">
@@ -30,11 +30,11 @@
                 <div class="col-2" id="cardTotal">{{ cartTotal|format_currency('EUR') }}</div>
             </div>
 
-        {%  endif %}
+        {% endif %}
 
     </div>
     <div class="btn-group">
-        <a href="{{path('cart-reset') }}" class="btn btn-danger">Vider le panier</a>
+        <a href="{{ path('cart-reset') }}" class="btn btn-danger">Vider le panier</a>
         <a href="{{ path('boutique') }}" class="btn btn-primary">Retour à la boutique</a>
     </div>
 

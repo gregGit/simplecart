@@ -10,13 +10,12 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+import "./variantCard.js";
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 require('bootstrap');
 
-import "./variantCard.js";
-
-$(document).ready(function() {
+$(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });

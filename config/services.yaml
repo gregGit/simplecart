@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    #Liste des jours feriés fixes. Paques, ascenscion et pentecote seront calculés
+    #Ces jours ne comptent pas dans le délais d'expédition
     app.joursFeries:
         - '01-01'
         - '01-05'
@@ -12,6 +14,9 @@ parameters:
         - '15-08'
         - '01-11'
         - '25-12'
+    #Délais d'expédition en nombre de jours ouvrés
+    app.delaisExp: 7
+
 services:
     # default configuration for services in *this* file
     _defaults:

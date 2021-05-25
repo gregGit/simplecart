@@ -18,13 +18,13 @@ interface CartStorageInterface
      * Retourne la date de création stoquée sur le support
      * @return DateTimeApp|null
      */
-    public function getCreationTime():?DateTimeApp;
+    public function getCreationTime(): ?DateTimeApp;
 
     /**
      * Retorune le contenu du panier stoqué sur le support
      * @return CartContent|null
      */
-    public function getCartItems():?CartContent;
+    public function getCartItems(): ?CartContent;
 
     /**
      * Ecriture de la date de création

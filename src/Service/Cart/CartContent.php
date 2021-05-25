@@ -14,8 +14,8 @@ use Iterator;
  */
 class CartContent implements Iterator
 {
-    protected $pos=0;
-    protected $items=[];
+    protected $pos = 0;
+    protected $items = [];
 
     /**
      * Ajoute ou met à jour un item.
@@ -24,16 +24,16 @@ class CartContent implements Iterator
      * @param CartItem $addItem
      * @return $this
      */
-    public function add(CartItem $addItem){
-        foreach($this as $key=>$item){
-            if($key==$addItem->getKey())
-            {
+    public function add(CartItem $addItem)
+    {
+        foreach ($this as $key => $item) {
+            if ($key == $addItem->getKey()) {
                 $item->setVariant($addItem->getVariant());
-                $item->setQty($item->getQty()+$addItem->getQty());
+                $item->setQty($item->getQty() + $addItem->getQty());
                 return $this;
             }
         }
-        $this->items[]=$addItem;
+        $this->items[] = $addItem;
         return $this;
     }
 
@@ -45,10 +45,10 @@ class CartContent implements Iterator
      */
     public function remove(CartItem $addItem)
     {
-        $itemPos=0;
-        foreach($this as $key=>$item){
-            if($key==$addItem->getKey()) {
-                array_splice($this->items,$itemPos,1);
+        $itemPos = 0;
+        foreach ($this as $key => $item) {
+            if ($key == $addItem->getKey()) {
+                array_splice($this->items, $itemPos, 1);
                 break;
             }
             $itemPos++;
@@ -63,9 +63,10 @@ class CartContent implements Iterator
      * @param CartItem $cartItem
      * @return CartContent
      */
-    public function set(CartItem $cartItem){
-        $pos=$this->getPos($cartItem->getKey());
-        if($pos===false){
+    public function set(CartItem $cartItem)
+    {
+        $pos = $this->getPos($cartItem->getKey());
+        if ($pos === false) {
             return $this;
         }
         $this->items[$pos]->setVariant($cartItem->getVariant())
@@ -74,19 +75,16 @@ class CartContent implements Iterator
     }
 
 
-    protected function getPos($scKey){
-        $itemPos=0;
-        foreach($this as $key=>$item){
-            if($key==$scKey) {
+    protected function getPos($scKey)
+    {
+        $itemPos = 0;
+        foreach ($this as $key => $item) {
+            if ($key == $scKey) {
                 return $itemPos;
             }
             $itemPos++;
         }
         return false;
-    }
-    public function current(): ?CartItem
-    {
-        return count($this->items)>0?$this->items[$this->pos]:null;
     }
 
     public function next()
@@ -96,20 +94,25 @@ class CartContent implements Iterator
 
     public function key()
     {
-        if(count($this->items)>0){
+        if (count($this->items) > 0) {
             return $this->current()->getKey();
         }
         return null;
     }
 
+    public function current(): ?CartItem
+    {
+        return count($this->items) > 0 ? $this->items[$this->pos] : null;
+    }
+
     public function valid()
     {
-        $maxpos=count($this->items)-1;
-       return $this->pos<=$maxpos;
+        $maxpos = count($this->items) - 1;
+        return $this->pos <= $maxpos;
     }
 
     public function rewind()
     {
-        $this->pos=0;
+        $this->pos = 0;
     }
 }

@@ -118,6 +118,13 @@ class Variant
         return $this;
     }
 
+    /**
+     * Retourne le stock du variant dans la taille $scTaille
+     * Si la taille n'existe pas la fonction retourne false (donc à différencier de 0)
+     *
+     * @param $scTaille
+     * @return false|mixed
+     */
     public function getStock($scTaille){
         foreach($this->getTailles() as $taille=>$stock){
             if($taille==$scTaille){
